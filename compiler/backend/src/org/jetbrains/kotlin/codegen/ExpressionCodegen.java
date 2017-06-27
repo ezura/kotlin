@@ -1305,6 +1305,10 @@ public class ExpressionCodegen extends KtVisitor<StackValue, StackValue> impleme
         Type type = getVariableType(variableDescriptor);
         int index = myFrameMap.enter(variableDescriptor, type);
 
+        if (isDelegatedLocalVariable(variableDescriptor)) {
+            myFrameMap.enter(getDelegatedLocalVariableMetadata(variableDescriptor, bindingContext), AsmTypes.K_PROPERTY0_TYPE);
+        }
+
         if (isSharedVarType(type)) {
             markLineNumber(statement, false);
             v.anew(type);
@@ -1352,6 +1356,10 @@ public class ExpressionCodegen extends KtVisitor<StackValue, StackValue> impleme
         v.mark(scopeStart);
 
         leaveTasks.add(answer -> {
+            if (isDelegatedLocalVariable(variableDescriptor)) {
+                myFrameMap.leave(getDelegatedLocalVariableMetadata(variableDescriptor, bindingContext));
+            }
+
             int index = myFrameMap.leave(variableDescriptor);
 
             v.visitLocalVariable(variableDescriptor.getName().asString(), type.getDescriptor(), null, scopeStart, blockEnd, index);
@@ -1765,9 +1773,14 @@ public class ExpressionCodegen extends KtVisitor<StackValue, StackValue> impleme
         }
 
         StackValue value = context.lookupInContext(descriptor, StackValue.LOCAL_0, state, false);
-        if (value == null) return null;
+        if (isDelegatedLocalVariable(descriptor) && value != null) {
+            VariableDescriptor metadata = getDelegatedLocalVariableMetadata((VariableDescriptor) descriptor, bindingContext);
+            StackValue metadataValue = context.lookupInContext(metadata, StackValue.LOCAL_0, state, false);
+            assert metadataValue != null : "Metadata stack value should be non-null for local delegated property: " + descriptor;
+            return delegatedVariableValue(value, metadataValue, (VariableDescriptorWithAccessors) descriptor, typeMapper);
+        }
 
-        return adjustVariableValue(value, descriptor);
+        return value;
     }
 
     @Nullable
@@ -3542,18 +3555,9 @@ public class ExpressionCodegen extends KtVisitor<StackValue, StackValue> impleme
 
     @NotNull
     private StackValue getVariableMetadataValue(@NotNull VariableDescriptorWithAccessors variableDescriptor) {
-        // TODO: do not generate anonymous classes for local delegated properties in inline functions
-        // We can use the $$delegatedProperties array as in non-inline functions and upon inlining, detect elements at what indices
-        // of that array are used in the inline function body, load the corresponding initializing bytecode from <clinit> of the
-        // container class (where the PropertyReferenceNImpl instance is created), copy and adapt it at the call site
-        if (context.getFunctionDescriptor().isInline()) {
-            KtProperty ktProperty = (KtProperty) DescriptorToSourceUtils.descriptorToDeclaration(variableDescriptor);
-            assert ktProperty != null : "No declaration found for property " + variableDescriptor;
-            //noinspection ConstantConditions
-            return generatePropertyReference(ktProperty.getDelegate(), variableDescriptor, variableDescriptor, null, null);
-        }
-
-        return PropertyCodegen.getDelegatedPropertyMetadata(variableDescriptor, bindingContext);
+        StackValue value = findLocalOrCapturedValue(getDelegatedLocalVariableMetadata(variableDescriptor, bindingContext));
+        assert value != null : "Can't find stack value for local delegated variable metadata: " + variableDescriptor;
+        return value;
     }
 
     @NotNull
@@ -3593,15 +3597,16 @@ public class ExpressionCodegen extends KtVisitor<StackValue, StackValue> impleme
         Type resultType = initializer.type;
 
         if (isDelegatedLocalVariable(variableDescriptor)) {
+            StackValue metadataValue = getVariableMetadataValue(variableDescriptor);
+            initializePropertyMetadata((KtProperty) variableDeclaration, variableDescriptor, metadataValue);
+
             ResolvedCall<FunctionDescriptor> provideDelegateCall = bindingContext.get(PROVIDE_DELEGATE_RESOLVED_CALL, variableDescriptor);
             if (provideDelegateCall != null) {
-                StackValue metadataValue = getVariableMetadataValue(variableDescriptor);
                 resultType = generateProvideDelegateCallForLocalVariable(initializer, metadataValue, provideDelegateCall);
             }
         }
 
         storeTo.storeSelector(resultType, v);
-
     }
 
     @NotNull
@@ -3641,6 +3646,23 @@ public class ExpressionCodegen extends KtVisitor<StackValue, StackValue> impleme
         VariableDescriptor descriptor = bindingContext.get(VARIABLE, declaration);
         assert descriptor != null :  "Couldn't find variable declaration in binding context " + declaration.getText();
         return descriptor;
+    }
+
+    private void initializePropertyMetadata(
+            @NotNull KtProperty variable,
+            @NotNull LocalVariableDescriptor variableDescriptor,
+            @NotNull StackValue metadataVar
+    ) {
+        // TODO: do not generate anonymous classes for local delegated properties in inline functions
+        // We can use the $$delegatedProperties array as in non-inline functions and upon inlining, detect elements at what indices
+        // of that array are used in the inline function body, load the corresponding initializing bytecode from <clinit> of the
+        // container class (where the PropertyReferenceNImpl instance is created), copy and adapt it at the call site
+        //noinspection ConstantConditions
+        StackValue value = context.getFunctionDescriptor().isInline()
+                           ? generatePropertyReference(variable.getDelegate(), variableDescriptor, variableDescriptor, null, null)
+                           : PropertyCodegen.getDelegatedPropertyMetadata(variableDescriptor, bindingContext);
+        value.put(K_PROPERTY_TYPE, v);
+        metadataVar.storeSelector(K_PROPERTY_TYPE, v);
     }
 
     @NotNull
