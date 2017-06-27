@@ -24,7 +24,9 @@ import org.jetbrains.kotlin.idea.caches.resolve.analyze
 import org.jetbrains.kotlin.idea.inspections.AbstractKotlinInspection
 import org.jetbrains.kotlin.psi.KtCallExpression
 import org.jetbrains.kotlin.psi.KtDotQualifiedExpression
+import org.jetbrains.kotlin.psi.KtReturnExpression
 import org.jetbrains.kotlin.psi.KtVisitorVoid
+import org.jetbrains.kotlin.psi.psiUtil.anyDescendantOfType
 import org.jetbrains.kotlin.psi.psiUtil.endOffset
 import org.jetbrains.kotlin.psi.psiUtil.startOffset
 import org.jetbrains.kotlin.resolve.calls.callUtil.getResolvedCall
@@ -48,11 +50,17 @@ class SimplifiableCallChainInspection : AbstractKotlinInspection() {
                         firstCallExpression.calleeExpression?.text to secondCallExpression.calleeExpression?.text
                     ] ?: return
 
-                    val context = expression.analyze(BodyResolveMode.PARTIAL)
+                    val context = expression.analyze()
                     val firstResolvedCall = firstQualifiedExpression.getResolvedCall(context) ?: return
                     val conversion = actualConversions.firstOrNull {
                         firstResolvedCall.resultingDescriptor.fqNameOrNull()?.asString() == it.firstFqName
                     } ?: return
+                    // Do not apply on maps due to lack of relevant stdlib functions
+                    val firstReceiverType = firstResolvedCall.extensionReceiver?.type ?: return
+                    if (KotlinBuiltIns.isMapOrNullableMap(firstReceiverType)) return
+                    // Do not apply for lambdas with return inside
+                    val lambdaArgument = firstCallExpression.lambdaArguments.firstOrNull()
+                    if (lambdaArgument?.anyDescendantOfType<KtReturnExpression>() == true) return
 
                     val secondResolvedCall = expression.getResolvedCall(context) ?: return
                     val secondResultingDescriptor = secondResolvedCall.resultingDescriptor
