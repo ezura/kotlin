@@ -47,9 +47,9 @@ internal class ClasspathRootsResolver(
             if (contentRoot !is JvmContentRoot) continue
             val root = contentRootToVirtualFile(contentRoot) ?: continue
 
-            when (contentRoot) {
+            result += when (contentRoot) {
                 is JavaSourceRoot -> {
-                    result += JavaRoot(root, JavaRoot.RootType.SOURCE, contentRoot.packagePrefix?.let { prefix ->
+                    JavaRoot(root, JavaRoot.RootType.SOURCE, contentRoot.packagePrefix?.let { prefix ->
                         if (isValidJavaFqName(prefix)) FqName(prefix)
                         else null.also {
                             report(STRONG_WARNING, "Invalid package prefix name is ignored: $prefix")
@@ -57,7 +57,7 @@ internal class ClasspathRootsResolver(
                     })
                 }
                 is JvmClasspathRoot -> {
-                    result += JavaRoot(root, JavaRoot.RootType.BINARY)
+                    JavaRoot(root, JavaRoot.RootType.BINARY)
                 }
                 else -> error("Unknown root type: $contentRoot")
             }
