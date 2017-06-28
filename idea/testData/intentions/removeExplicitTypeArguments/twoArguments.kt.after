@@ -1,5 +1,4 @@
 // IS_APPLICABLE: true
-// WITH_RUNTIME
 
 fun <T> foo(p1: List<T>, p2: List<T>) {
 }

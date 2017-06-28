@@ -1,7 +1,7 @@
 <problems>
     <problem>
         <file>dependentLocal.kt</file>
-        <line>5</line>
+        <line>3</line>
         <module>light_idea_test_case</module>
         <entry_point TYPE="file" FQNAME="temp:///src/dependentLocal.kt" />
         <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Use destructuring declaration</problem_class>
@@ -9,7 +9,7 @@
     </problem>
     <problem>
         <file>firstProperties.kt</file>
-        <line>5</line>
+        <line>3</line>
         <module>light_idea_test_case</module>
         <entry_point TYPE="file" FQNAME="temp:///src/firstProperties.kt" />
         <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Use destructuring declaration</problem_class>
@@ -17,7 +17,7 @@
     </problem>
     <problem>
         <file>fold.kt</file>
-        <line>5</line>
+        <line>3</line>
         <module>light_idea_test_case</module>
         <entry_point TYPE="file" FQNAME="temp:///src/fold.kt" />
         <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Use destructuring declaration</problem_class>
@@ -25,7 +25,7 @@
     </problem>
     <problem>
         <file>twoOfThree.kt</file>
-        <line>6</line>
+        <line>4</line>
         <module>light_idea_test_case</module>
         <entry_point TYPE="file" FQNAME="temp:///src/twoOfThree.kt" />
         <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Use destructuring declaration</problem_class>
@@ -33,7 +33,7 @@
     </problem>
     <problem>
         <file>list.kt</file>
-        <line>5</line>
+        <line>3</line>
         <module>light_idea_test_case</module>
         <entry_point TYPE="file" FQNAME="temp:///src/list.kt" />
         <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Use destructuring declaration</problem_class>
@@ -65,7 +65,7 @@
     </problem>
     <problem>
         <file>mapIndexedExceptFirst.kt</file>
-        <line>5</line>
+        <line>3</line>
         <module>light_idea_test_case</module>
         <entry_point TYPE="file" FQNAME="temp:///src/mapIndexedExceptFirst.kt" />
         <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Use destructuring declaration</problem_class>

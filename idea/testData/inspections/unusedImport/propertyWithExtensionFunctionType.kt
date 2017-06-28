@@ -6,5 +6,3 @@ import foo.funExtension
 fun test() {
     CrExtended().funExtension()
 }
-
-// WITH_RUNTIME

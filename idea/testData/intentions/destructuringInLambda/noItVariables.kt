@@ -1,5 +1,3 @@
-// WITH_RUNTIME
-
 data class XY(val x: String, val y: String)
 
 fun convert(xy: XY, foo: (XY) -> Unit) = foo(xy)

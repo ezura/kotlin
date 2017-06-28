@@ -1,5 +1,3 @@
-// WITH_RUNTIME
-
 class MyMap {
     val entries = listOf<Map.Entry<Int, Int>>()
 }

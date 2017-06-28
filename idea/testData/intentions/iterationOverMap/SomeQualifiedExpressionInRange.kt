@@ -1,5 +1,3 @@
-// WITH_RUNTIME
-
 fun main(args: Array<String>) {
     for (<caret>entry in 1.createListOfDataClasses()) {
         val int1 = entry.a

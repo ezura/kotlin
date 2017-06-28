@@ -1,5 +1,3 @@
-// WITH_RUNTIME
-
 fun foo() {
     val list = listOf(MyClass(1, 2, 3), MyClass(2, 3, 4))
     list.forEach { (a, b) ->

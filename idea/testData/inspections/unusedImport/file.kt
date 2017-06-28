@@ -17,6 +17,3 @@ fun foo(list: ArrayList<String>, p: RootPackageClass) {
 }
 
 class RootPackageClass
-
-// WITH_RUNTIME
-// FULL_JDK

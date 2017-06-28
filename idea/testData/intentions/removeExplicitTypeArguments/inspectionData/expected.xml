@@ -136,7 +136,7 @@
 
   <problem>
     <file>insideOtherCall.kt</file>
-    <line>5</line>
+    <line>3</line>
     <module>light_idea_test_case</module>
     <entry_point TYPE="file" FQNAME="insideOtherCall.kt" />
     <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Unnecessary type argument</problem_class>
@@ -145,7 +145,7 @@
 
   <problem>
     <file>insideDeepOtherCall.kt</file>
-    <line>8</line>
+    <line>6</line>
     <module>light_idea_test_case</module>
     <entry_point TYPE="file" FQNAME="insideDeepOtherCall.kt" />
     <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Unnecessary type argument</problem_class>
@@ -154,7 +154,7 @@
 
   <problem>
     <file>insideDeepOtherCall.kt</file>
-    <line>8</line>
+    <line>6</line>
     <module>light_idea_test_case</module>
     <entry_point TYPE="file" FQNAME="insideDeepOtherCall.kt" />
     <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Unnecessary type argument</problem_class>
@@ -163,7 +163,7 @@
 
   <problem>
     <file>twoArguments.kt</file>
-    <line>8</line>
+    <line>7</line>
     <module>light_idea_test_case</module>
     <entry_point TYPE="file" FQNAME="twoArguments.kt" />
     <problem_class severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">Unnecessary type argument</problem_class>
@@ -172,7 +172,7 @@
 
   <problem>
     <file>twoArguments.kt</file>
-    <line>8</line>
+    <line>7</line>
     <module>light_idea_test_case</module>
     <entry_point TYPE="file" FQNAME="twoArguments.kt" />
     <problem_class severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">Unnecessary type argument</problem_class>
@@ -190,7 +190,7 @@
 
   <problem>
     <file>getterBody.kt</file>
-    <line>5</line>
+    <line>4</line>
     <module>light_idea_test_case</module>
     <entry_point TYPE="file" FQNAME="getterBody.kt" />
     <problem_class severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">Unnecessary type argument</problem_class>
@@ -199,7 +199,7 @@
 
   <problem>
     <file>defaultParamValue.kt</file>
-    <line>4</line>
+    <line>3</line>
     <module>light_idea_test_case</module>
     <entry_point TYPE="file" FQNAME="defaultParamValue.kt" />
     <problem_class severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">Unnecessary type argument</problem_class>
@@ -208,7 +208,7 @@
 
   <problem>
     <file>blockValue.kt</file>
-    <line>7</line>
+    <line>6</line>
     <module>light_idea_test_case</module>
     <entry_point TYPE="file" FQNAME="blockValue.kt" />
     <problem_class severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">Unnecessary type argument</problem_class>
@@ -217,7 +217,7 @@
 
   <problem>
     <file>lambdaValue.kt</file>
-    <line>5</line>
+    <line>4</line>
     <module>light_idea_test_case</module>
     <entry_point TYPE="file" FQNAME="lambdaValue.kt" />
     <problem_class severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">Unnecessary type argument</problem_class>

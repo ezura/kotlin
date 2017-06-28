@@ -1,5 +1,3 @@
-// WITH_RUNTIME
-
 fun foo() = 0 to 10
 
 fun bar(): Int {

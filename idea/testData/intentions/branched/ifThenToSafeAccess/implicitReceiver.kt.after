@@ -1,2 +1,1 @@
-// WITH_RUNTIME
 fun String?.foo() = this?.isEmpty()

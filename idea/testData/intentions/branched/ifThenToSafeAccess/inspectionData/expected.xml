@@ -113,7 +113,7 @@
   </problem>
   <problem>
     <file>nullCheckWithSelectorCallChain.kt</file>
-    <line>5</line>
+    <line>3</line>
     <module>light_idea_test_case</module>
     <entry_point TYPE="file" FQNAME="temp:///src/nullCheckWithSelectorCallChain.kt" />
     <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">If-Then foldable to '?.'</problem_class>
@@ -145,7 +145,7 @@
   </problem>
   <problem>
     <file>implicitReceiver.kt</file>
-    <line>2</line>
+    <line>1</line>
     <module>light_idea_test_case</module>
     <entry_point TYPE="file" FQNAME="temp:///src/implicitReceiver.kt" />
     <problem_class severity="WARNING" attribute_key="WARNING_ATTRIBUTES">If-Then foldable to '?.'</problem_class>

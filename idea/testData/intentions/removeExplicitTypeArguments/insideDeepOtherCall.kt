@@ -1,5 +1,3 @@
-// WITH_RUNTIME
-
 fun foo(f: ListWrapper<Int>) {}
 
 class ListWrapper<T>(val x: List<T>)

@@ -9,6 +9,3 @@ import java.sql.* // unused
 
 fun foo(file: File, list: ArrayList<Int>) {
 }
-
-// WITH_RUNTIME
-// FULL_JDK
