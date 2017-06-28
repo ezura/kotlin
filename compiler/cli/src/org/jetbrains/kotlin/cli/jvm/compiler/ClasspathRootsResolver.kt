@@ -129,6 +129,7 @@ internal class ClasspathRootsResolver(
         }
 
         for (module in modules) {
+            // TODO: report a diagnostic if a module with this name was already added
             javaModuleFinder.addUserModule(module)
         }
 
